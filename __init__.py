@@ -1,3 +1,6 @@
+#!python
+#coding:utf-8
+
 import sqlite3
 from flask import Flask,request
 from flask_cors import CORS
