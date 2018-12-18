@@ -17,6 +17,10 @@ def get_info():
     conn = sqlite3.connect('SQLLITE.db')
     cursor = conn.cursor()
     data = request.get_data()
+    if not data:
+        return json.dumps({
+        "code":404
+    })
     json_re = json.loads(data)
 
     for i in range(len(json_re)):
@@ -55,6 +59,34 @@ def post_img():
         "data":list_sql
     })
 
+# 根据时间取出数据
+@app.route('/date',methods=['GET','POST'])
+def get_time_img():
+    conn = sqlite3.connect('SQLLITE.db')
+    cursor = conn.cursor()
+    data = request.get_data()
+
+    json_re = json.loads(data)
+    print(json_re['beginTime'])
+    beginTime = json_re['beginTime']
+    endTime = json_re['endTime']
+
+    cursor.execute('SELECT * FROM user WHERE time > \'%d\' AND time < \'%d\'' % (beginTime,endTime))
+
+    sql_data = cursor.fetchall()
+    list_sql = []
+    if len(sql_data) > 0:
+        for i in range(len(sql_data)):
+            list_sql.append({'timer': sql_data[i][0], 'url': sql_data[i][1], 'img_id':sql_data[i][2]})
+    cursor.close()
+    conn.commit()
+    conn.close()
+
+    return json.dumps({
+        "code":0,
+        "data":list_sql
+    })
+
 
 #删除数据
 @app.route('/delete',methods=['GET','POST'])
@@ -77,5 +109,5 @@ def delete_img():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='127.0.0.1',port=5011)
 
