@@ -68,7 +68,7 @@ def get_time_img():
     cursor = conn.cursor()
     data = request.get_data()
 
-    json_re = json.loads(data)
+    json_re = json.loads(data.decode('utf-8'))
     print(json_re['beginTime'])
     beginTime = json_re['beginTime']
     endTime = json_re['endTime']
