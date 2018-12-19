@@ -43,6 +43,8 @@ def get_info():
 def post_img():
     conn = sqlite3.connect('SQLLITE.db')
     cursor = conn.cursor()
+
+    cursor.execute('CREATE TABLE IF NOT EXISTS user(time, url,img_id)')
     cursor.execute('SELECT * FROM user')
 
     sql_data = cursor.fetchall()
@@ -109,5 +111,5 @@ def delete_img():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1',port=5011)
+    app.run(host='127.0.0.1',port=8024)
 
