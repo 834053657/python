@@ -21,7 +21,7 @@ def get_info():
         return json.dumps({
         "code":404
     })
-    json_re = json.loads(data)
+    json_re = json.loads(data.decode('utf-8'))
 
     for i in range(len(json_re)):
         time_v = json_re[i]['time']
