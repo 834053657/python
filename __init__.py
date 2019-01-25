@@ -94,7 +94,7 @@ def get_time_img():
 @app.route('/delete',methods=['GET','POST'])
 def delete_img():
     data = request.get_data()
-    json_re = json.loads(data)
+    json_re = json.loads(data.decode('utf-8'))
     print(json_re['img_id'])
     id = json_re['img_id']
 
